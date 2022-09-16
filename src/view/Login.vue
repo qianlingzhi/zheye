@@ -5,7 +5,7 @@
       <validate-input ref="inputRef" :rules="emailRules" v-model="emailValue" placeholder="12321" label="Email address" type=" "></validate-input>
       <validate-input :rules="passwordRules" v-model="passwordValue" placeholder="12321" label="Password" type="password"></validate-input>
       <template #submit >
-        <button type="button" class="btn btn-primary">注册</button>
+        <button type="button" class="btn btn-primary">登录</button>
       </template>
     </validate-form>
     <a class="mt-30 mb-30" href="">还没有账户？去注册一个新的吧！</a>
@@ -16,6 +16,7 @@
 import { Component, defineComponent, ref } from 'vue'
 import ValidateInput, { RulesProp } from '@/components/ValidateInput.vue'
 import ValidateForm from '@/components/ValidateForm.vue'
+import { useRouter } from 'vue-router'
 export default defineComponent({
   name: 'Login',
   components: {
@@ -23,6 +24,7 @@ export default defineComponent({
     ValidateForm
   },
   setup () {
+    const router = useRouter()
     const inputRef = ref<Component>()
     const emailValue = ref('')
     const emailRules: RulesProp = [
@@ -34,8 +36,10 @@ export default defineComponent({
       { type: 'required', message: '密码不能为空' }
     ]
     const onFromSubmit = (result: boolean) => {
-      console.log(result)
-      console.log(inputRef)
+      console.log('result:', result)
+      if (result) {
+        router.push({ name: 'column', params: { id: 12 } })
+      }
     }
     return {
       emailRules,
