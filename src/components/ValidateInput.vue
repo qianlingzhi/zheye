@@ -2,7 +2,7 @@
   <div class="form-floating mb-3  ">
     <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" :value="inputRef.val"
       @blur="validateInput" @input="updateValue" v-bind="$attrs">
-    <label for="floatingInput">{{$attrs.label}}</label>
+    <label v-if="$attrs.label" for="floatingInput">{{$attrs.label}}</label>
     <div class="invalid-feedback " style="text-align:left;display: block;" v-if="inputRef.error">
       {{inputRef.message}}
     </div>

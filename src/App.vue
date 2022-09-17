@@ -1,6 +1,6 @@
 <template>
   <div>
-    <GlobalHeader :user="currentUser" />
+    <GlobalHeader :user="store.user" />
     <router-view></router-view>
     <footer class="text-center py-4 text-secondary bg-lingt mt6">
       <small>
@@ -20,9 +20,11 @@
 import { defineComponent } from 'vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { userStore } from './pinia'
 const currentUser: UserProps = {
-  isLogin: false,
-  name: 'viking'
+  isLogin: true,
+  name: 'viking',
+  id: 1
 }
 export default defineComponent({
   name: 'App',
@@ -30,8 +32,10 @@ export default defineComponent({
     GlobalHeader
   },
   setup () {
+    const store = userStore()
+    store.user = currentUser
     return {
-      currentUser
+      store
     }
   }
 })

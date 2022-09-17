@@ -18,8 +18,9 @@
 <script lang=ts>
 import { defineComponent } from 'vue'
 import { useRoute } from 'vue-router'
-import { testPosts, testColumn } from '@/testData'
+// import { testPosts, testColumn } from '@/testData'
 import PostItem from '@/components/PostItem.vue'
+import { postStore, columnStore } from '@/pinia'
 export default defineComponent({
   components: {
     PostItem
@@ -27,8 +28,10 @@ export default defineComponent({
   setup () {
     const route = useRoute()
     const columnId = +route.params.id
-    const column = testColumn.find(c => c.id === columnId)
-    const list = testPosts.filter(i => i.columnId === columnId)
+    const postStoreData = postStore()
+    const columnStoreData = columnStore()
+    const column = columnStoreData.getColumnbyId(columnId)
+    const list = postStoreData.getPostBycid(columnId)
     return {
       route,
       column,

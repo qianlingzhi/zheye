@@ -8,7 +8,7 @@
     <ul v-else class="list-inline mb-0" >
       <drop-down :title="`你好 ${user.name}`">
         <drop-down-item>
-          <a class="dropdown-item" href="#" >新建文章</a>
+          <router-link class="dropdown-item" to="/publishPost">新建文章</router-link>
         </drop-down-item>
         <drop-down-item disable>
           <a class="dropdown-item" href="#" >编辑资料</a>
