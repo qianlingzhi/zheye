@@ -2,7 +2,7 @@
   <div class="column-detail-page w-690">
     <div class="column-info row mb-4 border-bottom pb-4 align-item-center">
       <div class="col-3 text-center">
-        <img :src="column?.avatar" alt="" class="rounded-circle border w-100"/>
+        <img :src="column && column.avatar && column.avatar.url" alt="" class="rounded-circle border w-100" />
       </div>
       <div class="col-9">
         <h4>{{column?.title}}</h4>
@@ -16,7 +16,7 @@
 </template>
 
 <script lang=ts>
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 // import { testPosts, testColumn } from '@/testData'
 import PostItem from '@/components/PostItem.vue'
@@ -27,11 +27,15 @@ export default defineComponent({
   },
   setup () {
     const route = useRoute()
-    const columnId = +route.params.id
+    const columnId = route.params.id as string
     const postStoreData = postStore()
     const columnStoreData = columnStore()
-    const column = columnStoreData.getColumnbyId(columnId)
-    const list = postStoreData.getPostBycid(columnId)
+    onMounted(() => {
+      columnStoreData.getColumn(columnId)
+      postStoreData.getPostBycid(columnId)
+    })
+    const column = computed(() => columnStoreData.getColumnbyId(columnId))
+    const list = computed(() => postStoreData.testPosts)
     return {
       route,
       column,
@@ -42,4 +46,5 @@ export default defineComponent({
 </script>
 
 <style  lang="scss" scoped>
+
 </style>

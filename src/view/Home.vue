@@ -5,18 +5,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, computed } from 'vue'
 import ColumnListVue from '../components/ColumnList.vue'
-import { ColumnProps, testColumn } from '@/testData'
-const testlist: ColumnProps[] = testColumn
+import { columnStore } from '@/pinia'
 export default defineComponent({
   name: 'App',
   components: {
     ColumnListVue
   },
   setup () {
+    const store = columnStore()
+    onMounted(() => { store.getColumns() })
+    const list = computed(() => store.testColumn)
     return {
-      list: testlist
+      list
     }
   }
 })

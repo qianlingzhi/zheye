@@ -39,7 +39,7 @@ router.beforeEach((to, from, next) => {
   console.log(store.user)
   console.log(to.meta.isLogin)
   if (to.name !== 'login' && !store.user.id && to.meta.isLogin) {
-    router.push({ name: 'login', params: { path: from.path } })
+    router.push({ name: 'login', query: { path: from.path } })
   }
   next()
 })

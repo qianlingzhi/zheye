@@ -1,6 +1,7 @@
 <template>
   <div>
     <GlobalHeader :user="store.user" />
+    <Loader v-if="loadStore.isLoadIng"/>
     <router-view></router-view>
     <footer class="text-center py-4 text-secondary bg-lingt mt6">
       <small>
@@ -19,8 +20,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
+import Loader from './components/Loader.vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { userStore } from './pinia'
+import { userStore, loaderStore } from './pinia'
 const currentUser: UserProps = {
   isLogin: true,
   name: 'viking',
@@ -29,13 +31,16 @@ const currentUser: UserProps = {
 export default defineComponent({
   name: 'App',
   components: {
-    GlobalHeader
+    GlobalHeader,
+    Loader
   },
   setup () {
     const store = userStore()
+    const loadStore = loaderStore()
     store.user = currentUser
     return {
-      store
+      store,
+      loadStore
     }
   }
 })
@@ -49,6 +54,7 @@ export default defineComponent({
   text-align: center;
   color: #2c3e50;
 }
+
 .w-690 {
   width: 690PX;
   margin: 0 auto;

@@ -7,10 +7,10 @@
         </h4>
         <div class="row my-3 align-items-center">
           <div v-if="item.image" class="col-4">
-            <img  class="rounded-lg w-100" :src="item.image" :alt="item.title">
+            <img  class="rounded-lg w-100" :src="item.image && item.image.url" :alt="item.title">
           </div>
           <p class="col-8 text-muted">
-            {{item.content}}
+            {{item.excerpt}}
           </p>
         </div>
         <span class="">{{item.createAt}}</span>
