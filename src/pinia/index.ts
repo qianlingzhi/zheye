@@ -4,8 +4,9 @@ import axios from 'axios'
 export const pinia = createPinia()
 export interface UserProps {
   isLogin: boolean
-  name?: string
-  id?: number
+  nickName?: string
+  _id?: number
+  column:string
 }
 export const loaderStore = defineStore('loaderSotre', {
   state: () => {
@@ -17,7 +18,22 @@ export const loaderStore = defineStore('loaderSotre', {
 export const userStore = defineStore('userStore', {
   state: () => {
     return {
-      user: <UserProps>{}
+      user: <UserProps>{},
+      token: localStorage.getItem('token') || ''
+    }
+  },
+  actions: {
+    async login (params: object) {
+      const { data } = await axios.post('/user/login', params)
+      this.token = data.data.token
+      localStorage.setItem('token', this.token)
+      axios.defaults.headers.common.Authorization = `Bearer ${this.token}`
+      this.getUserInfo()
+    },
+    async getUserInfo () {
+      const { data } = await axios.get('/user/current')
+      console.log(data)
+      this.user = { isLogin: true, ...data.data }
     }
   }
 })

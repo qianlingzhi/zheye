@@ -1,7 +1,8 @@
 <template>
   <div>
     <GlobalHeader :user="store.user" />
-    <Loader v-if="loadStore.isLoadIng"/>
+    <Message></Message>
+    <Loader v-if="loadStore.isLoadIng" />
     <router-view></router-view>
     <footer class="text-center py-4 text-secondary bg-lingt mt6">
       <small>
@@ -19,25 +20,26 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
+import GlobalHeader from './components/GlobalHeader.vue'
 import Loader from './components/Loader.vue'
+import Message from './components/Message.vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { userStore, loaderStore } from './pinia'
-const currentUser: UserProps = {
-  isLogin: true,
-  name: 'viking',
-  id: 1
-}
+import axios from 'axios'
 export default defineComponent({
   name: 'App',
   components: {
     GlobalHeader,
-    Loader
+    Loader,
+    Message
   },
   setup () {
     const store = userStore()
     const loadStore = loaderStore()
-    store.user = currentUser
+    if (store.token && !store.user.isLogin) {
+      axios.defaults.headers.common.Authorization = `Bearer ${store.token}`
+      store.getUserInfo()
+    }
     return {
       store,
       loadStore

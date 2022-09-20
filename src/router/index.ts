@@ -34,12 +34,9 @@ const router = createRouter({
     }
   ]
 })
-router.beforeEach((to, from, next) => {
-  console.log(to.name !== 'login')
-  console.log(store.user)
-  console.log(to.meta.isLogin)
-  if (to.name !== 'login' && !store.user.id && to.meta.isLogin) {
-    router.push({ name: 'login', query: { path: from.path } })
+router.beforeEach((to, _from, next) => {
+  if (to.name !== 'login' && !store.user.isLogin && to.meta.isLogin) {
+    router.push({ name: 'login' })
   }
   next()
 })

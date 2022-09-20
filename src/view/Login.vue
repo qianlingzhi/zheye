@@ -16,7 +16,8 @@
 import { Component, defineComponent, ref } from 'vue'
 import ValidateInput, { RulesProp } from '@/components/ValidateInput.vue'
 import ValidateForm from '@/components/ValidateForm.vue'
-import { useRouter } from 'vue-router'
+import { userStore } from '@/pinia'
+import router from '@/router'
 export default defineComponent({
   name: 'Login',
   components: {
@@ -24,7 +25,6 @@ export default defineComponent({
     ValidateForm
   },
   setup () {
-    const router = useRouter()
     const inputRef = ref<Component>()
     const emailValue = ref('')
     const emailRules: RulesProp = [
@@ -36,9 +36,9 @@ export default defineComponent({
       { type: 'required', message: '密码不能为空' }
     ]
     const onFromSubmit = (result: boolean) => {
-      console.log('result:', result)
       if (result) {
-        router.push({ name: 'column', params: { id: 12 } })
+        const store = userStore()
+        store.login({ email: emailValue.value, password: passwordValue.value }).then(() => { router.back() })
       }
     }
     return {

@@ -6,7 +6,7 @@
       <li class="list-inline-item"><router-link to="/login" class="btn btn-outline-light my-2">注册</router-link></li>
     </ul>
     <ul v-else class="list-inline mb-0" >
-      <drop-down :title="`你好 ${user.name}`">
+      <drop-down :title="`你好 ${user.nickName}`">
         <drop-down-item>
           <router-link class="dropdown-item" to="/publishPost">新建文章</router-link>
         </drop-down-item>
@@ -23,13 +23,9 @@
 
 <script lang=ts>
 import { defineComponent, PropType } from 'vue'
+import { UserProps } from '../pinia/index'
 import DropDown from './DropDown.vue'
 import DropDownItem from './DropDownItem.vue'
-export interface UserProps {
-  isLogin: boolean
-  name?: string
-  id?: number
-}
 export default defineComponent({
   name: 'GlobalHeader',
   props: {
