@@ -14,8 +14,9 @@ import { reactive, PropType, defineComponent, onMounted } from 'vue'
 import { mitter } from './ValidateForm.vue'
 const emailReg = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
 interface RuleProp {
-  type: 'required' | 'email',
-  message: string
+  type: 'required' | 'email' | 'custom',
+  message: string,
+  action?: () => boolean
 }
 export type RulesProp = RuleProp[]
 export default defineComponent({
@@ -47,6 +48,11 @@ export default defineComponent({
               break
             case 'email':
               passed = emailReg.test(inputRef.val)
+              break
+            case 'custom':
+              if (item.action) {
+                passed = item.action()
+              }
               break
             default:
               break

@@ -13,6 +13,9 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use((response) => {
   loadStore.isLoadIng = false
   return response
+}, (error) => {
+  loadStore.isLoadIng = false
+  return Promise.reject(error)
 })
 const app = createApp(App)
 app.use(pinia)

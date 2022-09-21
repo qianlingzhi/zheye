@@ -3,6 +3,7 @@ import Home from '../view/Home.vue'
 import Login from '../view/Login.vue'
 import Column from '../view/Column.vue'
 import PublishPost from '../view/PublishPost.vue'
+import Register from '../view/Register.vue'
 import { userStore, pinia } from '@/pinia'
 const store = userStore(pinia)
 const routerHistory = createWebHistory()
@@ -25,12 +26,17 @@ const router = createRouter({
       component: Column
     },
     {
-      path: '/PublishPost',
+      path: '/publishPost',
       name: 'publishPost',
       component: PublishPost,
       meta: {
         isLogin: true
       }
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     }
   ]
 })

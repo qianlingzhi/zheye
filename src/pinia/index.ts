@@ -11,7 +11,9 @@ export interface UserProps {
 export const loaderStore = defineStore('loaderSotre', {
   state: () => {
     return {
-      isLoadIng: false
+      isLoadIng: false,
+      isMessage: false,
+      message: ''
     }
   }
 })
@@ -32,8 +34,10 @@ export const userStore = defineStore('userStore', {
     },
     async getUserInfo () {
       const { data } = await axios.get('/user/current')
-      console.log(data)
       this.user = { isLogin: true, ...data.data }
+    },
+    async register (params: object) {
+      return await axios.post('/users', params)
     }
   }
 })

@@ -1,7 +1,6 @@
 <template>
   <div>
     <GlobalHeader :user="store.user" />
-    <Message></Message>
     <Loader v-if="loadStore.isLoadIng" />
     <router-view></router-view>
     <footer class="text-center py-4 text-secondary bg-lingt mt6">
@@ -22,7 +21,6 @@
 import { defineComponent } from 'vue'
 import GlobalHeader from './components/GlobalHeader.vue'
 import Loader from './components/Loader.vue'
-import Message from './components/Message.vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { userStore, loaderStore } from './pinia'
 import axios from 'axios'
@@ -30,8 +28,7 @@ export default defineComponent({
   name: 'App',
   components: {
     GlobalHeader,
-    Loader,
-    Message
+    Loader
   },
   setup () {
     const store = userStore()
@@ -56,7 +53,13 @@ export default defineComponent({
   text-align: center;
   color: #2c3e50;
 }
-
+#message {
+  position: fixed;
+  width: 400px;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+}
 .w-690 {
   width: 690PX;
   margin: 0 auto;

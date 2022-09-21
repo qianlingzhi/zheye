@@ -18,6 +18,7 @@ import ValidateInput, { RulesProp } from '@/components/ValidateInput.vue'
 import ValidateForm from '@/components/ValidateForm.vue'
 import { userStore } from '@/pinia'
 import router from '@/router'
+import createMessage from '@/components/createMessage'
 export default defineComponent({
   name: 'Login',
   components: {
@@ -38,7 +39,10 @@ export default defineComponent({
     const onFromSubmit = (result: boolean) => {
       if (result) {
         const store = userStore()
-        store.login({ email: emailValue.value, password: passwordValue.value }).then(() => { router.back() })
+        store.login({ email: emailValue.value, password: passwordValue.value }).then(() => { router.back() }).catch((data) => {
+          console.log(data)
+          createMessage(data.response.data.error, 'error', 2000)
+        })
       }
     }
     return {
